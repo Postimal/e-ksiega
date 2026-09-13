@@ -1,0 +1,18 @@
+<article class="sticky-note">
+  @if (decoration === 'balloons') {
+    <span class="corner-decoration corner-decoration-left" aria-hidden="true">🎈</span>
+    <span class="corner-decoration corner-decoration-right" aria-hidden="true">🎈</span>
+  } @else if (decoration === 'stars') {
+    <span class="corner-decoration corner-decoration-left" aria-hidden="true">✦</span>
+    <span class="corner-decoration corner-decoration-right" aria-hidden="true">✦</span>
+  }
+
+  <div class="photo-frame">
+    <img [src]="photoUrl" alt="Zdjęcie dodane do księgi gości" loading="lazy" decoding="async" />
+  </div>
+
+  <div class="note-content">
+    <p class="wishes">{{ wishes }}</p>
+    <p class="signature">{{ signature }}</p>
+  </div>
+</article>

@@ -15,17 +15,24 @@
     } @else if (!photos().length) {
       <p class="gallery-status">Galeria jest jeszcze pusta.</p>
     } @else {
-      @for (photo of photos(); track photo.id) {
-      <figure class="gallery-item">
-          <img [src]="photo.photoUrl" alt="Zdjęcie dodane do księgi gości" />
-          <figcaption>
-            <strong>{{ photo.signature }}</strong>
-            <span>{{ photo.wishes }}</span>
-          </figcaption>
-      </figure>
+      @for (photo of visiblePhotos(); track photo.id) {
+        <app-wishes-renderer
+          [photoUrl]="photo.photoUrl"
+          [wishes]="photo.wishes"
+          [signature]="photo.signature"
+          decoration="balloons"
+        />
       }
     }
   </section>
+
+  @if (!isLoading() && !errorMessage() && totalPages() > 1) {
+    <nav class="pagination" aria-label="Paginacja galerii">
+      <button type="button" [disabled]="currentPage() === 1" (click)="goToPreviousPage()">Poprzednia</button>
+      <span>Strona {{ currentPage() }} z {{ totalPages() }}</span>
+      <button type="button" [disabled]="currentPage() === totalPages()" (click)="goToNextPage()">Następna</button>
+    </nav>
+  }
 
   <a class="button back-button" routerLink="/">Dodaj swoje zdjęcie i życzenia</a>
 </main>

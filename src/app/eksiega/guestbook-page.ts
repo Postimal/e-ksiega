@@ -83,6 +83,7 @@ export class GuestbookPage {
 
       this.formMessage.set('Dziękujemy! Twoje życzenia zostały dodane.');
       this.submitted.set(true);
+      requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
       this.showSnackbar('Zdjęcie i życzenia dodane do księgi.');
     } catch (error: unknown) {
       console.error('Guestbook submission failed:', error);

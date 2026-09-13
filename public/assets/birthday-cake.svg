@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Tort urodzinowy</title>
+  <desc id="desc">Dekoracyjna ilustracja tortu urodzinowego na przyjęcie rodzinne</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#dce3c9"/><stop offset="1" stop-color="#9caf88"/></linearGradient>
+    <linearGradient id="cake" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fffdf4"/><stop offset="1" stop-color="#f1dfb9"/></linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#f8f3df"/><stop offset="1" stop-color="#c9d1b8"/></linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="130" cy="170" r="115" fill="#f5f0c9" opacity=".45"/>
+  <circle cx="690" cy="250" r="170" fill="#f8f3df" opacity=".32"/>
+  <path d="M0 780c160-70 250-45 390 25 145 72 260 70 410-35v230H0Z" fill="#6b7a51" opacity=".38"/>
+  <ellipse cx="400" cy="820" rx="290" ry="42" fill="url(#plate)" stroke="#6b7a51" stroke-width="5"/>
+  <path d="M180 690h440v115c0 30-24 54-54 54H234c-30 0-54-24-54-54Z" fill="url(#cake)" stroke="#6b7a51" stroke-width="5"/>
+  <path d="M180 690c35 34 58 26 88 0 30 34 58 34 88 0 30 34 58 34 88 0 30 34 58 34 88 0 30 28 55 34 88 0" fill="none" stroke="#d9a86c" stroke-width="18" stroke-linecap="round"/>
+  <path d="M230 572h340v120H230Z" fill="#f7e9d0" stroke="#6b7a51" stroke-width="5"/>
+  <path d="M230 585c28 30 55 30 84 0 28 30 56 30 84 0 28 30 56 30 84 0 28 30 56 30 84 0" fill="none" stroke="#d9a86c" stroke-width="18" stroke-linecap="round"/>
+  <path d="M250 522c30-18 50 18 80 0s50 18 80 0 50 18 80 0 50 18 60 0v55H250Z" fill="#fffdf4" stroke="#6b7a51" stroke-width="5"/>
+  <path d="M285 448v80M400 438v90M515 448v80" stroke="#fffdf4" stroke-width="18" stroke-linecap="round"/>
+  <path d="M285 430c-16-28 20-39 0-70M400 420c-16-28 20-39 0-70M515 430c-16-28 20-39 0-70" fill="none" stroke="#d9a86c" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="285" cy="356" r="9" fill="#f5f0c9"/><circle cx="400" cy="346" r="9" fill="#f5f0c9"/><circle cx="515" cy="356" r="9" fill="#f5f0c9"/>
+  <text x="400" y="930" text-anchor="middle" fill="#fffdf4" font-family="Montserrat, sans-serif" font-size="24" letter-spacing="5">BIRTHDAY</text>
+</svg>
