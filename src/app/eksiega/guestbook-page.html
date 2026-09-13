@@ -65,3 +65,13 @@
 @if (snackbarMessage()) {
   <div class="snackbar" role="status">{{ snackbarMessage() }}</div>
 }
+
+@if (interactionService.isBusy()) {
+  <div class="interaction-backdrop" role="alert" aria-busy="true" aria-live="polite">
+    <div class="interaction-loader">
+      <span class="spinner" aria-hidden="true"></span>
+      <strong>{{ interactionService.message() }}</strong>
+      <span>Prosimy chwilę poczekać</span>
+    </div>
+  </div>
+}

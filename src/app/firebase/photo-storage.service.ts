@@ -7,12 +7,14 @@ export class PhotoStorageService {
   private readonly storage = getStorage(firebaseApp);
 
   async uploadPhoto(file: File): Promise<string> {
-    const compressedPhoto = await this.compressPhoto(file);
-    const filePath = `guestbook-photos/${Date.now()}-${crypto.randomUUID()}.jpg`;
+    const photo = file.size > 8 * 1024 * 1024 ? await this.compressPhoto(file) : file;
+    const extension =
+      photo.type === 'image/jpeg' ? 'jpg' : file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const filePath = `guestbook-photos/${Date.now()}-${crypto.randomUUID()}.${extension}`;
     const photoReference = ref(this.storage, filePath);
 
-    await uploadBytes(photoReference, compressedPhoto, {
-      contentType: 'image/jpeg',
+    await uploadBytes(photoReference, photo, {
+      contentType: photo.type || file.type,
       customMetadata: {
         originalName: file.name,
       },
@@ -23,7 +25,7 @@ export class PhotoStorageService {
 
   private async compressPhoto(file: File): Promise<Blob> {
     const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
-    const maxDimension = 1920;
+    const maxDimension = 2560;
     const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height));
     const canvas = document.createElement('canvas');
 
@@ -37,7 +39,7 @@ export class PhotoStorageService {
         (compressedBlob) =>
           compressedBlob ? resolve(compressedBlob) : reject(new Error('Photo compression failed')),
         'image/jpeg',
-        0.82,
+        0.9,
       );
     });
   }

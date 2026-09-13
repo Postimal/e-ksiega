@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { GuestbookEntryRecord, GuestbookService } from '../../firebase/guestbook.service';
 
 @Component({
   imports: [RouterLink],
@@ -8,17 +9,21 @@ import { RouterLink } from '@angular/router';
   templateUrl: './gallery-page.html',
 })
 export class GalleryPage {
-  protected readonly photos = [
-    { src: 'assets/hero-image.svg', alt: 'Placeholder zdjęcia numer 1', label: 'Chrzest Święty' },
-    {
-      src: 'assets/hero-image.svg',
-      alt: 'Placeholder zdjęcia numer 2',
-      label: 'Pierwsze urodziny',
-    },
-    {
-      src: 'assets/hero-image.svg',
-      alt: 'Placeholder zdjęcia numer 3',
-      label: 'Wspólne świętowanie',
-    },
-  ];
+  protected readonly photos = signal<GuestbookEntryRecord[]>([]);
+  protected readonly isLoading = signal(true);
+  protected readonly errorMessage = signal('');
+
+  constructor(private readonly guestbookService: GuestbookService) {
+    void this.loadPhotos();
+  }
+
+  private async loadPhotos(): Promise<void> {
+    try {
+      this.photos.set(await this.guestbookService.getEntries());
+    } catch {
+      this.errorMessage.set('Nie udało się pobrać zdjęć. Spróbuj ponownie później.');
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
 }

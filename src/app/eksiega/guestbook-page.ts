@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GuestbookService } from '../firebase/guestbook.service';
 import { PhotoStorageService } from '../firebase/photo-storage.service';
+import { InteractionService } from '../services/interaction.service';
 
 @Component({
   imports: [RouterLink],
@@ -25,6 +26,7 @@ export class GuestbookPage {
   constructor(
     private readonly guestbookService: GuestbookService,
     private readonly photoStorageService: PhotoStorageService,
+    protected readonly interactionService: InteractionService,
   ) {}
 
   protected onFileSelected(event: Event): void {
@@ -65,15 +67,18 @@ export class GuestbookPage {
     }
 
     this.isSubmitting.set(true);
+    this.interactionService.start('Przygotowujemy zdjęcie...');
     this.formMessage.set('Wysyłanie zdjęcia i życzeń...');
 
     try {
+      this.interactionService.update('Wysyłamy zdjęcie...');
       const photoUrl = await this.photoStorageService.uploadPhoto(this.selectedFile);
 
+      this.interactionService.update('Zapisujemy życzenia...');
       await this.guestbookService.saveEntry({
         wishes: this.wishes().trim(),
         signature: this.signature().trim(),
-        photoUrl,
+        photoUrl: photoUrl,
       });
 
       this.formMessage.set('Dziękujemy! Twoje życzenia zostały dodane.');
@@ -84,6 +89,7 @@ export class GuestbookPage {
       this.showSnackbar('Nie udało się dodać wpisu.');
     } finally {
       this.isSubmitting.set(false);
+      this.interactionService.stop();
     }
   }
 
