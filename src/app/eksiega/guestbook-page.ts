@@ -84,7 +84,8 @@ export class GuestbookPage {
       this.formMessage.set('Dziękujemy! Twoje życzenia zostały dodane.');
       this.submitted.set(true);
       this.showSnackbar('Zdjęcie i życzenia dodane do księgi.');
-    } catch {
+    } catch (error: unknown) {
+      console.error('Guestbook submission failed:', error);
       this.formMessage.set('Nie udało się wysłać wpisu. Spróbuj ponownie.');
       this.showSnackbar('Nie udało się dodać wpisu.');
     } finally {
