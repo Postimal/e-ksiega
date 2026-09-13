@@ -45,7 +45,9 @@
         </div>
 
         @if (formMessage()) { <p class="form-message" role="alert">{{ formMessage() }}</p> }
-        <button class="button button-primary" type="submit">Dodaj do księgi</button>
+        <button class="button button-primary" type="submit" [disabled]="isSubmitting()">
+          {{ isSubmitting() ? 'Wysyłanie...' : 'Dodaj do księgi' }}
+        </button>
       </form>
     }
   </section>
@@ -59,3 +61,7 @@
     <strong>e-księga gości</strong>
   </footer>
 </main>
+
+@if (snackbarMessage()) {
+  <div class="snackbar" role="status">{{ snackbarMessage() }}</div>
+}
