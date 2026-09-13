@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+
+:root {
+	--color-1: #c9d1b8;
+	--color-2: #9caf88;
+	--color-3: #6b7a51;
+	--color-surface: #f8faf5;
+	--color-white: #ffffff;
+}
+
+* { box-sizing: border-box; }
+html, body { min-height: 100%; margin: 0; }
+body { background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-1) 100%); font-family: "Montserrat", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+button, input, textarea { font: inherit; }

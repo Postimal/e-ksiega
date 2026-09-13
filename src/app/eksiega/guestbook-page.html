@@ -1,0 +1,61 @@
+<main class="page-shell">
+  <header class="page-header">
+    <figure class="hero-image">
+      <img src="assets/hero-image.svg" alt="Tymczasowe zdjęcie z uroczystości" />
+    </figure>
+
+    <div class="date-chip" aria-label="Data uroczystości">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg>
+      111 październik 2026
+    </div>
+    <h1>Chrzest Święty<br />i roczek</h1>
+    <p class="subtitle">Podziel się z nami zdjęciem i życzeniami!</p>
+  </header>
+
+  <section class="guestbook-card" aria-labelledby="form-title">
+    @if (submitted()) {
+      <div class="success-message" role="status">
+        <span class="success-icon" aria-hidden="true">✓</span>
+        <strong>Dziękujemy za piękne życzenia!</strong>
+        <p>Twoje zdjęcie i wiadomość są gotowe do dodania do księgi pamiątkowej.</p>
+        <button class="button button-secondary" type="button" (click)="resetForm()">Dodaj kolejne życzenia</button>
+      </div>
+    } @else {
+      <form class="guestbook-form" (submit)="$event.preventDefault(); submitForm()">
+        <label class="upload-field" for="photo">
+          <input id="photo" type="file" accept="image/*" capture="environment" (change)="onFileSelected($event)" />
+          @if (previewUrl()) {
+            <img class="photo-preview" [src]="previewUrl()" alt="Podgląd wybranego zdjęcia" />
+            <span class="upload-title">{{ selectedFileName() }}</span>
+            <span class="upload-hint">Dotknij, aby zmienić zdjęcie</span>
+          } @else {
+            <svg class="upload-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 8.5h3l1.5-2h5l1.5 2h3A2 2 0 0 1 20 10.5v7A2 2 0 0 1 18 19.5H6a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z"></path><circle cx="12" cy="14" r="3.5"></circle></svg>
+            <span class="upload-title">Dodaj zdjęcie</span>
+            <span class="upload-hint">Kliknij, aby wybrać lub zrobić zdjęcie</span>
+          }
+        </label>
+
+        <div class="field">
+          <label for="wishes">Twoje życzenia</label>
+          <textarea id="wishes" [value]="wishes()" (input)="wishes.set($any($event.target).value)" placeholder="Napisz kilka miłych słów..."></textarea>
+        </div>
+        <div class="field">
+          <label for="signature">Podpis</label>
+          <input id="signature" type="text" [value]="signature()" (input)="signature.set($any($event.target).value)" placeholder="Jak masz na imię?" />
+        </div>
+
+        @if (formMessage()) { <p class="form-message" role="alert">{{ formMessage() }}</p> }
+        <button class="button button-primary" type="submit">Dodaj do księgi</button>
+      </form>
+    }
+  </section>
+
+  <nav class="quick-links" aria-label="Szybka nawigacja">
+    <a class="quick-link" routerLink="/galeria"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8" cy="9" r="1.5"></circle><path d="m4 17 5-5 3 3 2-2 6 5"></path></svg>Galeria zdjęć</a>
+  </nav>
+
+  <footer class="page-footer">
+    <img src="assets/logo.svg" alt="Logo e-księga gości" />
+    <strong>e-księga gości</strong>
+  </footer>
+</main>

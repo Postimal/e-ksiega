@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Ikona aparatu fotograficznego</title>
+  <circle cx="32" cy="32" r="29" fill="#ffffff" stroke="#c9d1b8" stroke-width="2"/>
+  <path d="M16 25a4 4 0 0 1 4-4h6l3-4h6l3 4h6a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4Z" fill="#9caf88" stroke="#6b7a51" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="32" cy="34" r="8" fill="#ffffff" stroke="#6b7a51" stroke-width="2"/>
+  <circle cx="45" cy="27" r="2" fill="#ffffff"/>
+</svg>

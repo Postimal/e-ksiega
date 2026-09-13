@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Tymczasowa ilustracja pary młodej</title>
+  <desc id="desc">Ciepła beżowa ilustracja dwóch osób na tle kwiatów</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ead7c1"/><stop offset="1" stop-color="#b98861"/></linearGradient>
+    <linearGradient id="dress" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffdf9"/><stop offset="1" stop-color="#e8d8c6"/></linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="120" cy="190" r="120" fill="#f8e9d6" opacity=".6"/>
+  <circle cx="700" cy="320" r="180" fill="#d4a77d" opacity=".55"/>
+  <path d="M0 760c110-120 180-80 260-20 110 82 198 75 300-18 92-84 160-105 240-20v298H0Z" fill="#8b684f" opacity=".55"/>
+  <path d="M222 1000c8-220 58-374 152-374 106 0 160 155 178 374Z" fill="url(#dress)"/>
+  <path d="M418 1000c18-212 72-344 168-344 94 0 140 132 150 344Z" fill="#f7eee4"/>
+  <circle cx="365" cy="330" r="84" fill="#b97554"/>
+  <circle cx="555" cy="310" r="88" fill="#d59d78"/>
+  <path d="M280 314c12-84 116-108 164-21-34-15-72-12-115 24Z" fill="#5d4035"/>
+  <path d="M468 296c24-91 130-91 173 5-54-28-104-22-173-5Z" fill="#68473a"/>
+  <path d="M332 394c24 19 51 20 75 0M523 391c28 20 55 20 82-2" fill="none" stroke="#6d4238" stroke-width="8" stroke-linecap="round"/>
+  <path d="M84 850c25-44 58-44 78 0-26-9-52-9-78 0Zm630-110c26-49 63-49 88 0-28-10-58-10-88 0Z" fill="#fff2dc" opacity=".85"/>
+  <text x="400" y="930" text-anchor="middle" fill="#fff8ef" font-family="Georgia, serif" font-size="24" letter-spacing="4">PLACEHOLDER</text>
+</svg>
