@@ -1,10 +1,13 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { getAuth } from 'firebase/auth';
 
 export const accessGuard: CanActivateFn = (_route, state) => {
   const router = inject(Router);
+  const auth = getAuth();
 
-  if (sessionStorage.getItem('guestbook-access') === 'granted') {
+  // Sprawdzamy prawdziwy stan zalogowania w Firebase
+  if (auth.currentUser && auth.currentUser.uid === 'app_member') {
     return true;
   }
 

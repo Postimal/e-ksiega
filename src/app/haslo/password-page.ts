@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { temporaryAccessPassword } from '../routing/access-password';
+import { AuthService } from '../auth';
 
 @Component({
   selector: 'app-password-page',
@@ -16,17 +16,27 @@ export class PasswordPage {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
+    private authService: AuthService,
   ) {
     this.redirectUrl = this.route.snapshot.queryParamMap.get('redirect') || '/';
   }
 
-  protected submitPassword(): void {
-    if (this.password() !== temporaryAccessPassword) {
-      this.errorMessage.set('Nieprawidłowe hasło. Spróbuj ponownie.');
+  protected async submitPassword(): Promise<void> {
+    if (!this.password().length) {
+      this.errorMessage.set('Pole jest wymagane. Wprowadź hasło');
       return;
     }
 
-    sessionStorage.setItem('guestbook-access', 'granted');
-    void this.router.navigateByUrl(this.redirectUrl);
+    this.errorMessage.set('');
+
+    try {
+      await this.authService.loginWithPassword(this.password());
+
+      sessionStorage.setItem('guestbook-access', 'granted');
+      void this.router.navigateByUrl(this.redirectUrl);
+    } catch (error) {
+      this.errorMessage.set('Nieprawidłowe hasło. Spróbuj ponownie.');
+      console.error('Szczegóły błędu logowania:', error);
+    }
   }
 }
