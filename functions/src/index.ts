@@ -31,28 +31,25 @@ setGlobalOptions({ maxInstances: 10 });
 //   response.send("Hello from Firebase!");
 // });
 
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as bcrypt from 'bcrypt';
+import { onCall, HttpsError } from 'firebase-functions/v2/https';
 
 admin.initializeApp();
 
 interface PasswordData {
-  password: string;
+  password?: string;
 }
 
 /**
  * Weryfikuje hasło z Firestore i zwraca Custom Token dla użytkownika.
- * @param {any} data Dane przesłane z aplikacji klienckiej.
- * @return {Promise<{token: string}>} Obiekt zawierający wygenerowany token.
  */
-export const verifyPasswordAndLogin = functions.https.onCall(async (data) => {
-  const userPassword = (data as unknown as PasswordData).password;
-  console.log('Otrzymany obiekt:', data);
+export const verifyPasswordAndLogin = onCall(async (request) => {
+  const payload = request.data as PasswordData;
+  const userPassword = payload?.password;
 
   if (!userPassword) {
-    // eslint-disable-next-line max-len
-    throw new functions.https.HttpsError('invalid-argument', 'Brak hasła.', { data });
+    throw new HttpsError('invalid-argument', 'Brak hasła.');
   }
 
   // Pobranie hashu z Firestore
@@ -60,15 +57,22 @@ export const verifyPasswordAndLogin = functions.https.onCall(async (data) => {
   const storedHash = doc.data()?.passwordHash;
 
   if (!storedHash) {
-    // eslint-disable-next-line max-len
-    throw new functions.https.HttpsError('internal', 'Brak konfiguracji hasła w bazie.');
+    throw new HttpsError('internal', 'Brak konfiguracji hasła w bazie.');
   }
 
-  // Porównanie hasła
-  const isMatch = await bcrypt.compare(userPassword, storedHash);
+  try {
+    // Porównanie hasła (try-catch zabezpiecza przed błędnym formatem hashu w DB)
+    const isMatch = await bcrypt.compare(userPassword, storedHash);
 
-  if (!isMatch) {
-    throw new functions.https.HttpsError('unauthenticated', 'Błędne hasło!');
+    if (!isMatch) {
+      throw new HttpsError('unauthenticated', 'Błędne hasło!');
+    }
+  } catch (error: any) {
+    console.error('Błąd podczas porównywania bcrypt:', error.message);
+    throw new HttpsError(
+      'internal',
+      'Błąd weryfikacji. Upewnij się, że w bazie Firestore masz zapisany prawidłowy hash bcrypt, a nie czysty tekst!',
+    );
   }
 
   // Wygenerowanie Custom Tokenu
