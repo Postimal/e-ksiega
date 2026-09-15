@@ -56,10 +56,10 @@ export class GuestbookPage {
   }
 
   protected async submitForm(): Promise<void> {
-    if (!this.selectedFile) {
-      this.formMessage.set('Dodaj zdjęcie, aby wysłać życzenia.');
-      return;
-    }
+    // if (!this.selectedFile) {
+    //   this.formMessage.set('Dodaj zdjęcie, aby wysłać życzenia.');
+    //   return;
+    // }
 
     if (!this.wishes().trim() || !this.signature().trim()) {
       this.formMessage.set('Uzupełnij życzenia i podpis.');
@@ -68,23 +68,27 @@ export class GuestbookPage {
 
     this.isSubmitting.set(true);
     this.interactionService.start('Przygotowujemy zdjęcie...');
-    this.formMessage.set('Wysyłanie zdjęcia i życzeń...');
 
     try {
-      this.interactionService.update('Wysyłamy zdjęcie...');
-      const photoUrl = await this.photoStorageService.uploadPhoto(this.selectedFile);
+      let photoUrl = '';
+
+      if (this.selectedFile) {
+        this.interactionService.update('Wysyłamy zdjęcie...');
+        photoUrl = await this.photoStorageService.uploadPhoto(this.selectedFile);
+      }
 
       this.interactionService.update('Zapisujemy życzenia...');
       await this.guestbookService.saveEntry({
         wishes: this.wishes().trim(),
         signature: this.signature().trim(),
-        photoUrl: photoUrl,
+        photoUrl,
       });
 
-      this.formMessage.set('Dziękujemy! Twoje życzenia zostały dodane.');
       this.submitted.set(true);
       requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-      this.showSnackbar('Zdjęcie i życzenia dodane do księgi.');
+      this.showSnackbar(
+        this.selectedFile ? 'Zdjęcie i życzenia dodane do księgi.' : 'Życzenia dodane do księgi.',
+      );
     } catch (error: unknown) {
       console.error('Guestbook submission failed:', error);
       this.formMessage.set('Nie udało się wysłać wpisu. Spróbuj ponownie.');

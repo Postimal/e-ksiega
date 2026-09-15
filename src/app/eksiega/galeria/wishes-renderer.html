@@ -7,9 +7,12 @@
     <span class="corner-decoration corner-decoration-right" aria-hidden="true">✦</span>
   }
 
-  <div class="photo-frame">
+  @if(photoUrl.length) {
+ <div class="photo-frame">
     <img [src]="photoUrl" alt="Zdjęcie dodane do księgi gości" loading="lazy" decoding="async" />
   </div>
+  }
+
 
   <div class="note-content">
     <p class="wishes">{{ wishes }}</p>

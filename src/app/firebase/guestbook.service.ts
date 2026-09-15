@@ -5,7 +5,7 @@ import { firebaseApp } from './firebase.config';
 export interface GuestbookEntry {
   wishes: string;
   signature: string;
-  photoUrl: string;
+  photoUrl?: string;
 }
 
 export interface GuestbookEntryRecord extends GuestbookEntry {
@@ -37,7 +37,6 @@ export class GuestbookService {
             ...document.data(),
           }) as GuestbookEntryRecord,
       )
-      .filter((entry) => entry.photoUrl && entry.photoUrl !== 'aaa')
       .sort((first, second) => (second.createdAt?.seconds ?? 0) - (first.createdAt?.seconds ?? 0));
   }
 }

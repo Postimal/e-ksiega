@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth';
+import { InteractionService } from '../services/interaction.service';
 
 @Component({
   selector: 'app-password-page',
@@ -17,6 +18,7 @@ export class PasswordPage {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private authService: AuthService,
+    protected readonly interactionService: InteractionService,
   ) {
     this.redirectUrl = this.route.snapshot.queryParamMap.get('redirect') || '/';
   }
@@ -30,13 +32,15 @@ export class PasswordPage {
     this.errorMessage.set('');
 
     try {
+      this.interactionService.start('Logowanie w trakcie');
       await this.authService.loginWithPassword(this.password());
 
-      sessionStorage.setItem('guestbook-access', 'granted');
       void this.router.navigateByUrl(this.redirectUrl);
     } catch (error) {
       this.errorMessage.set('Nieprawidłowe hasło. Spróbuj ponownie.');
       console.error('Szczegóły błędu logowania:', error);
+    } finally {
+      this.interactionService.stop();
     }
   }
 }

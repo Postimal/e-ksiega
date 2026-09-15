@@ -15,12 +15,12 @@
     } @else if (!photos().length) {
       <p class="gallery-status">Galeria jest jeszcze pusta.</p>
     } @else {
-      @for (photo of visiblePhotos(); track photo.id) {
+      @for (photo of visiblePhotos(); track photo.id; let even = $even) {
         <app-wishes-renderer
-          [photoUrl]="photo.photoUrl"
+          [photoUrl]="photo.photoUrl ?? ''"
           [wishes]="photo.wishes"
           [signature]="photo.signature"
-          decoration="balloons"
+          [decoration]="even ? 'balloons' : 'stars'"
         />
       }
     }

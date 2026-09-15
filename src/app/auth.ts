@@ -24,6 +24,7 @@ export class AuthService {
 
       // Logowanie w Firebase za pomocą otrzymanego Custom Tokenu
       const userCredential = await signInWithCustomToken(this.auth, result.data.token);
+      // TODO: czy cos dalej z tym tokenem robic?
       console.log('Zalogowano pomyślnie:', userCredential.user.uid);
     } catch (error: any) {
       console.error('Błąd podczas logowania:', error.message);
