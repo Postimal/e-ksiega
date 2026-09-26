@@ -5,8 +5,8 @@ import { PasswordPage } from '../haslo/password-page';
 import { accessGuard } from './access.guard';
 
 export const routes: Routes = [
-  { path: '', component: GuestbookPage, canActivate: [accessGuard] },
+  { path: 'start', component: GuestbookPage, canActivate: [accessGuard] },
   { path: 'galeria', component: GalleryPage, canActivate: [accessGuard] },
   { path: 'haslo', component: PasswordPage },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'start' },
 ];

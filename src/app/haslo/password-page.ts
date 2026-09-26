@@ -1,7 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth';
 import { InteractionService } from '../services/interaction.service';
+import {
+  QUERY_PARAM_GROUP_ID,
+  QUERY_PARAM_REDIRECT,
+  UrlQueryParamService,
+} from '../services/url-query-params.service';
 
 @Component({
   selector: 'app-password-page',
@@ -18,10 +23,13 @@ export class PasswordPage {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private authService: AuthService,
+    private urlQueryParamService: UrlQueryParamService,
     protected readonly interactionService: InteractionService,
   ) {
-    this.redirectUrl = this.route.snapshot.queryParamMap.get('redirect') || '/';
+    this.redirectUrl = this.route.snapshot.queryParamMap.get(QUERY_PARAM_REDIRECT) || '/';
   }
+
+  groupFromUrl = computed(() => this.urlQueryParamService.groupIdParam());
 
   protected async submitPassword(): Promise<void> {
     if (!this.password().length) {
@@ -33,9 +41,13 @@ export class PasswordPage {
 
     try {
       this.interactionService.start('Logowanie w trakcie');
-      await this.authService.loginWithPassword(this.password());
+      await this.authService.loginWithPassword(this.password(), this.groupFromUrl() ?? '');
 
-      void this.router.navigateByUrl(this.redirectUrl);
+      void this.router.navigate([this.redirectUrl], {
+        queryParams: {
+          [QUERY_PARAM_GROUP_ID]: this.groupFromUrl(),
+        },
+      });
     } catch (error) {
       this.errorMessage.set('Nieprawidłowe hasło. Spróbuj ponownie.');
       console.error('Szczegóły błędu logowania:', error);

@@ -2,6 +2,7 @@ import { Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GuestbookEntryRecord, GuestbookService } from '../../firebase/guestbook.service';
 import { WishesRenderer } from './wishes-renderer';
+import { UrlQueryParamService } from '../../services/url-query-params.service';
 
 @Component({
   imports: [RouterLink, WishesRenderer],
@@ -10,7 +11,7 @@ import { WishesRenderer } from './wishes-renderer';
   templateUrl: './gallery-page.html',
 })
 export class GalleryPage {
-  private readonly pageSize = 20;
+  private readonly pageSize = 15;
   protected readonly photos = signal<GuestbookEntryRecord[]>([]);
   protected readonly currentPage = signal(1);
   protected readonly isLoading = signal(true);
@@ -23,13 +24,18 @@ export class GalleryPage {
     return this.photos().slice(startIndex, startIndex + this.pageSize);
   });
 
-  constructor(private readonly guestbookService: GuestbookService) {
+  constructor(
+    private readonly guestbookService: GuestbookService,
+    private readonly urlQueryParamService: UrlQueryParamService,
+  ) {
     void this.loadPhotos();
   }
 
   private async loadPhotos(): Promise<void> {
     try {
-      this.photos.set(await this.guestbookService.getEntries());
+      this.photos.set(
+        await this.guestbookService.getEntriesV1(this.urlQueryParamService.groupIdParam() ?? ''),
+      );
       this.currentPage.set(1);
     } catch {
       this.errorMessage.set('Nie udało się pobrać zdjęć. Spróbuj ponownie później.');

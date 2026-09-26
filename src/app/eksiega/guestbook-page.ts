@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { GuestbookService } from '../firebase/guestbook.service';
 import { PhotoStorageService } from '../firebase/photo-storage.service';
 import { InteractionService } from '../services/interaction.service';
+import { UrlQueryParamService } from '../services/url-query-params.service';
 
 @Component({
   imports: [RouterLink],
@@ -26,6 +27,7 @@ export class GuestbookPage {
   constructor(
     private readonly guestbookService: GuestbookService,
     private readonly photoStorageService: PhotoStorageService,
+    private readonly urlQueryParamService: UrlQueryParamService,
     protected readonly interactionService: InteractionService,
   ) {}
 
@@ -78,10 +80,16 @@ export class GuestbookPage {
       }
 
       this.interactionService.update('Zapisujemy życzenia...');
-      await this.guestbookService.saveEntry({
+      // await this.guestbookService.saveEntry({
+      //   wishes: this.wishes().trim(),
+      //   signature: this.signature().trim(),
+      //   photoUrl,
+      // });
+      await this.guestbookService.saveEntryV1({
         wishes: this.wishes().trim(),
         signature: this.signature().trim(),
         photoUrl,
+        group_id: this.urlQueryParamService.groupIdParam() ?? '',
       });
 
       this.submitted.set(true);

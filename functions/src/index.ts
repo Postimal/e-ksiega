@@ -39,23 +39,32 @@ admin.initializeApp();
 
 interface PasswordData {
   password?: string;
+  groupId?: string;
 }
 
+/* eslint-disable max-len */
 /**
  * Weryfikuje hasło z Firestore i zwraca Custom Token dla użytkownika.
  */
 export const verifyPasswordAndLogin = onCall(async (request) => {
   const payload = request.data as PasswordData;
   const userPassword = payload?.password;
+  const userGroupId = payload?.groupId;
 
   if (!userPassword) {
     throw new HttpsError('invalid-argument', 'Brak hasła.');
   }
 
-  // Pobranie hashu z Firestore
-  const doc = await admin.firestore().doc('secrets/app_access').get();
-  const storedHash = doc.data()?.passwordHash;
+  if (!userGroupId?.length) {
+    throw new HttpsError('invalid-argument', 'Brak przypisanej grupy.');
+  }
 
+  // Pobranie hashu z Firestore
+  // const doc = await admin.firestore().doc('secrets/app_access').get();
+  const doc = await admin.firestore().collection('groups').doc(userGroupId).get();
+
+  // const storedHash = doc.data()?.passwordHash;
+  const storedHash = doc.data()?.password_hash;
   if (!storedHash) {
     throw new HttpsError('internal', 'Brak konfiguracji hasła w bazie.');
   }
@@ -67,6 +76,7 @@ export const verifyPasswordAndLogin = onCall(async (request) => {
     if (!isMatch) {
       throw new HttpsError('unauthenticated', 'Błędne hasło!');
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Błąd podczas porównywania bcrypt:', error.message);
     throw new HttpsError(

@@ -12,15 +12,15 @@ export class AuthService {
   /**
    * Loguje użytkownika za pomocą samego hasła przez Cloud Function.
    */
-  async loginWithPassword(password: string): Promise<void> {
+  async loginWithPassword(password: string, groupId: string): Promise<void> {
     try {
       // Wywołanie funkcji Cloud Function
-      const verifyPasswordAndLogin = httpsCallable<{ password: string }, { token: string }>(
-        this.functions,
-        'verifyPasswordAndLogin',
-      );
+      const verifyPasswordAndLogin = httpsCallable<
+        { password: string; groupId: string },
+        { token: string }
+      >(this.functions, 'verifyPasswordAndLogin');
 
-      const result = await verifyPasswordAndLogin({ password });
+      const result = await verifyPasswordAndLogin({ password, groupId });
 
       // Logowanie w Firebase za pomocą otrzymanego Custom Tokenu
       const userCredential = await signInWithCustomToken(this.auth, result.data.token);
