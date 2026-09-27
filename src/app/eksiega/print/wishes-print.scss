@@ -1,0 +1,81 @@
+@page {
+  size: A4;
+  margin: 15mm;
+}
+
+.a4-page {
+  background: #ffffff;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.header-title {
+  text-align: center;
+  color: #1e293b;
+  margin: 0 0 5px 0;
+  font-size: 28px;
+}
+
+.group-subtitle {
+  text-align: center;
+  color: #64748b;
+  margin: 0 0 20px 0;
+  font-size: 14px;
+}
+
+.section-title {
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 8px;
+  color: #1e293b;
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+.wishes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.wish-card {
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #2563eb;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 6px;
+  page-break-inside: avoid; /* Zapobiega rozrywaniu karty przy łamaniu stron w PDF */
+}
+
+.wish-text {
+  font-style: italic;
+  color: #334155;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.wish-author {
+  font-weight: bold;
+  text-align: right;
+  color: #0f172a;
+  font-size: 13px;
+}
+
+.empty-state {
+  text-align: center;
+  color: #94a3b8;
+  padding: 40px 0;
+}
+
+@media print {
+  .a4-page {
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+  }
+}

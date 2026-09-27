@@ -1,0 +1,11 @@
+/* Style dla wydruku / generowania PDF */
+@media print {
+  .no-print {
+    display: none !important; /* Ukrywa element całkowicie na wydruku */
+  }
+}
+
+.no-print button { display: flex; align-items: center; justify-content: center; width: 80%; margin: 20px auto; min-height: 58px; border: 2px solid var(--color-3); border-radius: 4px; padding: 15px 18px; cursor: pointer; font: 700 15px/1 "Montserrat", sans-serif; transition: filter .2s ease, transform .1s ease; }
+.button-primary { background: linear-gradient(180deg, var(--accent-light), var(--accent)); color: var(--white);}
+button { min-height: 58px; margin-top: 8px; border: 2px solid var(--color-3); border-radius: 4px; background: linear-gradient(180deg, var(--color-2), var(--color-3)); color: var(--color-white); cursor: pointer; font: 700 15px/1 "Montserrat", sans-serif; }
+

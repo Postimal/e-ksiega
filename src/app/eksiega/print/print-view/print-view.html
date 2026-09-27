@@ -1,0 +1,11 @@
+<div class="no-print button-primary">
+  <button (click)="printPage()">Pobierz jako PDF / Drukuj</button>
+</div>
+
+<app-wishes-print
+  [wishes]="fetchedWishes()">
+</app-wishes-print>
+
+<app-photos-print
+  [photos]="fetchedPhotos()">
+</app-photos-print>
