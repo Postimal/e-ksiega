@@ -1,5 +1,5 @@
-import { Component, computed, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, computed, DOCUMENT, inject, Renderer2 } from '@angular/core';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { UrlQueryParamService } from './services/url-query-params.service';
 
 @Component({
@@ -9,5 +9,26 @@ import { UrlQueryParamService } from './services/url-query-params.service';
 })
 export class App {
   protected groupService = inject(UrlQueryParamService);
-  groupFromUrl = computed(() => this.groupService.groupIdParam());
+  private route = inject(ActivatedRoute);
+  private renderer = inject(Renderer2);
+  private document = inject(DOCUMENT);
+
+  private currentThemeClass = '';
+
+  constructor() {
+    this.setBodyTheme(this.groupService.variantParam() ?? '');
+  }
+
+  private setBodyTheme(variant: string) {
+    if (!variant) return;
+    const body = this.document.body;
+
+    if (this.currentThemeClass) {
+      this.renderer.removeClass(body, this.currentThemeClass);
+    }
+
+    this.currentThemeClass = `theme-${variant}`;
+
+    this.renderer.addClass(body, this.currentThemeClass);
+  }
 }

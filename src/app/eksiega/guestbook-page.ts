@@ -1,9 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GuestbookService } from '../firebase/guestbook.service';
 import { PhotoStorageService } from '../firebase/photo-storage.service';
 import { InteractionService } from '../services/interaction.service';
 import { UrlQueryParamService } from '../services/url-query-params.service';
+
+export interface HeaderConfig {
+  imgSrc: string;
+  imgAlt: string;
+  date: string;
+  title: string;
+  subtitle: string;
+}
 
 @Component({
   imports: [RouterLink],
@@ -12,6 +20,8 @@ import { UrlQueryParamService } from '../services/url-query-params.service';
   templateUrl: './guestbook-page.html',
 })
 export class GuestbookPage {
+  @Input() variant: 'chrzest' | 'slub' | 'komunia' = 'chrzest';
+
   protected readonly selectedFileName = signal('');
   protected readonly previewUrl = signal('');
   protected readonly formMessage = signal('');
@@ -23,6 +33,33 @@ export class GuestbookPage {
 
   private selectedFile: File | null = null;
   private snackbarTimeout?: ReturnType<typeof setTimeout>;
+  private readonly configs: Record<string, HeaderConfig> = {
+    chrzest: {
+      imgSrc: 'assets/teddy.png',
+      imgAlt: 'Miś z okazji uroczystości',
+      date: '25 październik 2026',
+      title: 'Chrzest Święty<br />i Roczek',
+      subtitle: 'Podziel się z nami życzeniami!',
+    },
+    slub: {
+      imgSrc: 'assets/hero-image.svg',
+      imgAlt: 'Obrączki ślubne',
+      date: '12 września 2026',
+      title: 'Ślub i Wesele<br />Anny i Jana',
+      subtitle: 'Zostaw pamiątkowy wpis!',
+    },
+    komunia: {
+      imgSrc: 'assets/birthday-cake.svg',
+      imgAlt: 'Tort',
+      date: '5 grudnia 2026',
+      title: 'Komunia<br />Michała',
+      subtitle: 'Baw się dobrze i życz mi wszystkiego najlepszego!',
+    },
+  };
+
+  get currentConfig(): HeaderConfig {
+    return this.configs[this.variant] || this.configs['chrzest'];
+  }
 
   constructor(
     private readonly guestbookService: GuestbookService,
@@ -45,8 +82,8 @@ export class GuestbookPage {
       return;
     }
 
-    if (file.size > 25 * 1024 * 1024) {
-      this.formMessage.set('Zdjęcie może mieć maksymalnie 25 MB.');
+    if (file.size > 15 * 1024 * 1024) {
+      this.formMessage.set('Zdjęcie może mieć maksymalnie 15 MB.');
       input.value = '';
       return;
     }
@@ -58,11 +95,6 @@ export class GuestbookPage {
   }
 
   protected async submitForm(): Promise<void> {
-    // if (!this.selectedFile) {
-    //   this.formMessage.set('Dodaj zdjęcie, aby wysłać życzenia.');
-    //   return;
-    // }
-
     if (!this.wishes().trim() || !this.signature().trim()) {
       this.formMessage.set('Uzupełnij życzenia i podpis.');
       return;

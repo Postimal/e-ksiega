@@ -7,6 +7,21 @@
 	--color-white: #ffffff;
 }
 
+body.theme-slub {
+  --color-1: #ebd1d6;
+  --color-2: #bfa1a6;
+  --color-3: #8a6c71;
+  --color-surface: #faf5f6;
+}
+
+body.theme-komunia {
+  --color-2: #d4e6f1;
+  --color-1: #7ea4b5;
+  --color-3: #2b4c5e;
+  --color-surface: #f4f8fa;
+}
+
+
 * { box-sizing: border-box; }
 html, body { min-height: 100%; margin: 0; }
 body { background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-1) 100%); font-family: "Montserrat", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }

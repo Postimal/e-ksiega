@@ -5,6 +5,7 @@ import { InteractionService } from '../services/interaction.service';
 import {
   QUERY_PARAM_GROUP_ID,
   QUERY_PARAM_REDIRECT,
+  QUERY_PARAM_VARIANT,
   UrlQueryParamService,
 } from '../services/url-query-params.service';
 
@@ -46,6 +47,7 @@ export class PasswordPage {
       void this.router.navigate([this.redirectUrl], {
         queryParams: {
           [QUERY_PARAM_GROUP_ID]: this.groupFromUrl(),
+          [QUERY_PARAM_VARIANT]: this.urlQueryParamService.variantParam(),
         },
       });
     } catch (error) {

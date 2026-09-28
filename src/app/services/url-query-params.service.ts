@@ -1,51 +1,54 @@
-import { Injectable, inject, Signal } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs/operators';
+import { Injectable, inject, Signal, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 export const QUERY_PARAM_GROUP_ID = 'group_id';
 export const QUERY_PARAM_REDIRECT = 'redirect';
+export const QUERY_PARAM_VARIANT = 'variant';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UrlQueryParamService {
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+  groupIdParam = signal('');
+  variantParam = signal('');
 
-  readonly groupIdParam: Signal<string | null>;
+  // TODO: dane jak jakies teskty to moge brac z DB np jakies imiona i date
+  init(): void {
+    const urlParams = new URLSearchParams(window.location.search);
 
-  constructor() {
-    //TODO: imo jak sie to nam zapisze po raz pierwszy to niech sie zapisze do sessionStorage, i bede z sessionStorage czytał jako fallback
-    this.groupIdParam = toSignal(
-      this.router.events.pipe(
-        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-        map(() => this.getDeepestRoute(this.route)),
-        map((activeRoute) => {
-          const redirectParam = activeRoute.snapshot.queryParams[QUERY_PARAM_REDIRECT];
-          return redirectParam
-            ? this.resolveGroupIdParam(redirectParam)
-            : activeRoute.snapshot.queryParams[QUERY_PARAM_GROUP_ID] || null;
-        }),
-      ),
-      {
-        initialValue:
-          this.getDeepestRoute(this.route).snapshot.queryParams[QUERY_PARAM_GROUP_ID] || null,
-      },
-    );
-  }
+    const redirectParam = urlParams.get(QUERY_PARAM_REDIRECT);
 
-  private getDeepestRoute(route: ActivatedRoute): ActivatedRoute {
-    while (route.firstChild) {
-      route = route.firstChild;
+    if (redirectParam) {
+      this.variantParam.set(
+        this.resolveParamFromNestedQueryParam(redirectParam, QUERY_PARAM_VARIANT) ?? '',
+      );
+      this.groupIdParam.set(
+        this.resolveParamFromNestedQueryParam(redirectParam, QUERY_PARAM_GROUP_ID) ?? '',
+      );
+    } else {
+      this.variantParam.set(urlParams.get(QUERY_PARAM_VARIANT) ?? '');
+      this.groupIdParam.set(urlParams.get(QUERY_PARAM_GROUP_ID) ?? '');
     }
-    return route;
+
+    if (!this.variantParam()) {
+      this.variantParam.set('chrzest');
+    }
+
+    if (!this.groupIdParam()) {
+      this.groupIdParam.set('');
+    }
+
+    console.log('Ustalone dane wariantu na starcie:', this.variantParam());
   }
 
-  private resolveGroupIdParam(url: string) {
-    const urlTree = this.router.parseUrl(url);
-    const groupId = urlTree.queryParams[QUERY_PARAM_GROUP_ID];
-
-    return groupId;
+  private resolveParamFromNestedQueryParam(redirectUrl: string, paramName: string): string | null {
+    try {
+      const parser = new URLSearchParams(
+        redirectUrl.includes('?') ? redirectUrl.split('?')[1] : redirectUrl,
+      );
+      return parser.get(paramName);
+    } catch {
+      return null;
+    }
   }
 }
