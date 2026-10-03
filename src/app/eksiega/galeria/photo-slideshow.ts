@@ -7,6 +7,8 @@ import { Component, HostListener, Input, OnDestroy, computed, signal } from '@an
   styleUrl: './photo-slideshow.scss',
 })
 export class PhotoSlideshow implements OnDestroy {
+  private readonly slideDurationMs = 3000;
+  private readonly nextPhotoPrefetchDelayMs = 1000;
   private readonly photoUrlList = signal<string[]>([]);
 
   @Input()
@@ -142,13 +144,13 @@ export class PhotoSlideshow implements OnDestroy {
       this.nextPhotoPrefetchTimer = setTimeout(() => {
         this.nextPhotoPrefetchTimer = undefined;
         void this.loadPhoto(this.photoUrls[nextIndex], 'low');
-      }, 2000);
+      }, this.nextPhotoPrefetchDelayMs);
     }
 
     this.slideTimer = setTimeout(() => {
       this.slideTimer = undefined;
       void this.advanceToNextLoadedPhoto();
-    }, 5000);
+    }, this.slideDurationMs);
   }
 
   private async prefetchFirstPhoto(url: string): Promise<void> {
