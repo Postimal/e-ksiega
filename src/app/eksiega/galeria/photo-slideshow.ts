@@ -219,7 +219,7 @@ export class PhotoSlideshow implements OnDestroy {
       }
 
       this.scheduleNextSlide();
-    }, 650);
+    }, 300);
   }
 
   private lockDocumentScroll(): void {
