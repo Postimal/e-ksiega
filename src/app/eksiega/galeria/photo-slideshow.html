@@ -1,0 +1,38 @@
+<button
+  class="slideshow-launch"
+  type="button"
+  [disabled]="!photoUrls.length || !isFirstPhotoReady()"
+  (click)="start()"
+>
+  <span aria-hidden="true">▶</span>
+  {{ !photoUrls.length ? 'Brak zdjęć' : isFirstPhotoReady() ? 'Uruchom pokaz' : 'Przygotowuję zdjęcia...' }}
+</button>
+
+<section
+  class="slideshow-screen"
+  [class.is-open]="isOpen()"
+  [attr.aria-hidden]="!isOpen()"
+  aria-label="Pokaz zdjęć"
+>
+  @for (slide of displayedSlides(); track slide.index) {
+    <figure
+      class="slide"
+      [class.slide-outgoing]="slide.phase === 'outgoing'"
+      [class.slide-entering]="slide.phase === 'incoming'"
+      [attr.aria-hidden]="slide.phase === 'outgoing' ? 'true' : null"
+    >
+      <img [src]="slide.url" [alt]="slide.phase === 'outgoing' ? '' : 'Zdjęcie z galerii'" />
+    </figure>
+  }
+
+  <div class="slideshow-topbar">
+    <span>{{ currentIndex() + 1 }} / {{ photoUrls.length }}</span>
+    <button class="slideshow-close" type="button" (click)="close()" aria-label="Zakończ pokaz">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+
+  <div class="slideshow-progress" aria-hidden="true">
+    <span [style.width.%]="((currentIndex() + 1) / photoUrls.length) * 100"></span>
+  </div>
+</section>

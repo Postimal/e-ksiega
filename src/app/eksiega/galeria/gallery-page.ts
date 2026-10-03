@@ -3,9 +3,11 @@ import { RouterLink } from '@angular/router';
 import { GuestbookEntryRecord, GuestbookService } from '../../firebase/guestbook.service';
 import { WishesRenderer } from './wishes-renderer';
 import { UrlQueryParamService } from '../../services/url-query-params.service';
+import { PhotoSlideshow } from './photo-slideshow';
 
 @Component({
-  imports: [RouterLink, WishesRenderer],
+  standalone: true,
+  imports: [RouterLink, WishesRenderer, PhotoSlideshow],
   selector: 'app-gallery-page',
   styleUrl: './gallery-page.scss',
   templateUrl: './gallery-page.html',
@@ -16,6 +18,11 @@ export class GalleryPage {
   protected readonly currentPage = signal(1);
   protected readonly isLoading = signal(true);
   protected readonly errorMessage = signal('');
+  protected readonly slideshowPhotoUrls = computed(() =>
+    this.photos()
+      .map((photo) => photo.photoUrl)
+      .filter((photoUrl): photoUrl is string => Boolean(photoUrl)),
+  );
   protected readonly totalPages = computed(() =>
     Math.max(1, Math.ceil(this.photos().length / this.pageSize)),
   );
