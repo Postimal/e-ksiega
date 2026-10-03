@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GuestbookService } from '../firebase/guestbook.service';
 import { PhotoStorageService } from '../firebase/photo-storage.service';
@@ -20,8 +20,6 @@ export interface HeaderConfig {
   templateUrl: './guestbook-page.html',
 })
 export class GuestbookPage {
-  @Input() variant: 'chrzest' | 'slub' | 'komunia' = 'chrzest';
-
   protected readonly selectedFileName = signal('');
   protected readonly previewUrl = signal('');
   protected readonly formMessage = signal('');
@@ -58,7 +56,8 @@ export class GuestbookPage {
   };
 
   get currentConfig(): HeaderConfig {
-    return this.configs[this.variant] || this.configs['chrzest'];
+    const activeVariant = this.urlQueryParamService.variantParam() || 'chrzest';
+    return this.configs[activeVariant] || this.configs['chrzest'];
   }
 
   constructor(

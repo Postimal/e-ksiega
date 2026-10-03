@@ -2,12 +2,7 @@ import { Component, computed, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth';
 import { InteractionService } from '../services/interaction.service';
-import {
-  QUERY_PARAM_GROUP_ID,
-  QUERY_PARAM_REDIRECT,
-  QUERY_PARAM_VARIANT,
-  UrlQueryParamService,
-} from '../services/url-query-params.service';
+import { QUERY_PARAM_REDIRECT, UrlQueryParamService } from '../services/url-query-params.service';
 
 @Component({
   selector: 'app-password-page',
@@ -44,12 +39,7 @@ export class PasswordPage {
       this.interactionService.start('Logowanie w trakcie');
       await this.authService.loginWithPassword(this.password(), this.groupFromUrl() ?? '');
 
-      void this.router.navigate([this.redirectUrl], {
-        queryParams: {
-          [QUERY_PARAM_GROUP_ID]: this.groupFromUrl(),
-          [QUERY_PARAM_VARIANT]: this.urlQueryParamService.variantParam(),
-        },
-      });
+      void this.router.navigate([this.redirectUrl]);
     } catch (error) {
       this.errorMessage.set('Nieprawidłowe hasło. Spróbuj ponownie.');
       console.error('Szczegóły błędu logowania:', error);

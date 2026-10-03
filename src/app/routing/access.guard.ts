@@ -16,8 +16,6 @@ export const accessGuard: CanActivateFn = (_route, state) => {
   return router.createUrlTree(['/haslo'], {
     queryParams: {
       redirect: state.url,
-      group_id: urlQueryParamService.groupIdParam(),
-      variant: urlQueryParamService.variantParam(),
     },
   });
 };

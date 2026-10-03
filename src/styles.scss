@@ -5,13 +5,23 @@
 	--color-3: #6b7a51;
 	--color-surface: #f8faf5;
 	--color-white: #ffffff;
+	--overlay-backdrop: rgba(61, 72, 45, 0.48);
+	--overlay-shadow: rgba(61, 72, 45, 0.28);
+	--focus-shadow: rgba(156, 175, 136, 0.28);
+	--card-shadow: rgba(107, 122, 81, 0.18);
+	--button-shadow: rgba(107, 122, 81, 0.28);
 }
 
 body.theme-slub {
-  --color-1: #ebd1d6;
-  --color-2: #bfa1a6;
-  --color-3: #8a6c71;
-  --color-surface: #faf5f6;
+  --color-1: #f4efe9;
+  --color-2: #d9d2c9;
+  --color-3: #8d8178;
+  --color-surface: #fffdfb;
+  --overlay-backdrop: rgba(141, 129, 120, 0.52);
+  --overlay-shadow: rgba(141, 129, 120, 0.26);
+  --focus-shadow: rgba(141, 129, 120, 0.22);
+  --card-shadow: rgba(141, 129, 120, 0.18);
+  --button-shadow: rgba(141, 129, 120, 0.22);
 }
 
 body.theme-komunia {
@@ -19,6 +29,11 @@ body.theme-komunia {
   --color-1: #7ea4b5;
   --color-3: #2b4c5e;
   --color-surface: #f4f8fa;
+  --overlay-backdrop: rgba(43, 76, 94, 0.5);
+  --overlay-shadow: rgba(43, 76, 94, 0.25);
+  --focus-shadow: rgba(126, 164, 181, 0.28);
+  --card-shadow: rgba(43, 76, 94, 0.18);
+  --button-shadow: rgba(43, 76, 94, 0.22);
 }
 
 

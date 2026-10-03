@@ -1,4 +1,4 @@
-import { Component, computed, DOCUMENT, inject, Renderer2 } from '@angular/core';
+import { Component, DOCUMENT, effect, inject, Renderer2 } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { UrlQueryParamService } from './services/url-query-params.service';
 
@@ -16,7 +16,9 @@ export class App {
   private currentThemeClass = '';
 
   constructor() {
-    this.setBodyTheme(this.groupService.variantParam() ?? '');
+    effect(() => {
+      this.setBodyTheme(this.groupService.variantParam() ?? '');
+    });
   }
 
   private setBodyTheme(variant: string) {
