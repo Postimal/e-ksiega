@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class WishesRenderer {
   @Input({ required: true }) photoUrl = '';
+  @Input() prioritizeImage = false;
   @Input() wishes = '';
   @Input() signature = '';
   @Input() decoration: 'balloons' | 'stars' | 'none' = 'balloons';

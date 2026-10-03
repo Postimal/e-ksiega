@@ -9,7 +9,13 @@
 
   @if(photoUrl.length) {
  <div class="photo-frame">
-    <img [src]="photoUrl" alt="Zdjęcie dodane do księgi gości" loading="lazy" decoding="async" />
+    <img
+      [src]="photoUrl"
+      alt="Zdjęcie dodane do księgi gości"
+      [attr.loading]="prioritizeImage ? 'eager' : 'lazy'"
+      [attr.fetchpriority]="prioritizeImage ? 'high' : 'auto'"
+      decoding="async"
+    />
   </div>
   }
 

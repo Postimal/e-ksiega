@@ -17,7 +17,7 @@
 .hero-image img, .photo-preview { display: block; width: 100%; height: 100%; object-fit: cover; }
 .date-chip { display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 12px; padding: 7px 14px; border: 2px solid var(--color-1); border-radius: 4px; background: var(--white); color: var(--muted); box-shadow: 0 3px 8px var(--card-shadow), inset 0 1px 0 var(--white); font: 700 18px/1 "Alex Brush", cursive; }
 .date-chip svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
-h1 { margin: 0; font: 400 clamp(48px, 14vw, 82px)/1 "Great Vibes", cursive; }
+h1 { margin: 0; font: 400 clamp(48px, 14vw, 82px)/1 "Great Vibes", cursive; line-height: 74px; }
 .subtitle { margin: 14px 0 0; font: 500 17px/1.4 "Montserrat", sans-serif; }
 .guestbook-card { padding: 18px 16px; border: 1px solid var(--border); border-radius: 4px; background: linear-gradient(180deg, var(--white), var(--card)); box-shadow: var(--shadow); }
 .guestbook-card h2 { margin: 0 0 14px; font: 700 22px/1.2 "Montserrat", sans-serif; }

@@ -5,7 +5,9 @@
     <p class="eyebrow">Chrzest Święty i pierwsze urodziny</p>
     <h1>Galeria wspomnień</h1>
     <p class="intro">Zdjęcia i chwile z wyjątkowej, podwójnej uroczystości.</p>
-    <app-photo-slideshow [photoUrls]="slideshowPhotoUrls()" />
+    @if (visiblePhotos().length) {
+      <app-photo-slideshow [photoUrls]="slideshowPhotoUrls()" />
+    }
   </header>
 
   <section class="gallery-grid" aria-label="Lista zdjęć">
@@ -16,11 +18,12 @@
     } @else if (!photos().length) {
       <p class="gallery-status">Galeria jest jeszcze pusta.</p>
     } @else {
-      @for (photo of visiblePhotos(); track photo.id; let even = $even) {
+      @for (photo of visiblePhotos(); track photo.id; let even = $even; let index = $index) {
         <app-wishes-renderer
           [photoUrl]="photo.photoUrl ?? ''"
           [wishes]="photo.wishes"
           [signature]="photo.signature"
+          [prioritizeImage]="index < 3"
           [decoration]="even ? 'balloons' : 'stars'"
         />
       }
@@ -37,6 +40,6 @@
 
   <a class="button back-button" routerLink="/">Dodaj swoje zdjęcie i życzenia</a>
 
-  <!-- <a class="button back-button" routerLink="/galeria/print" queryParamsHandling="preserve">Pobierz swoje zdjęcia i życzenia jako PDF</a> -->
+  <a class="button back-button" routerLink="/galeria/print" queryParamsHandling="preserve">Pobierz swoje zdjęcia i życzenia jako PDF</a>
 
 </main>

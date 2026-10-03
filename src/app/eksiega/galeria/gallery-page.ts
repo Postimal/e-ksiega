@@ -40,15 +40,35 @@ export class GalleryPage {
 
   private async loadPhotos(): Promise<void> {
     try {
-      this.photos.set(
-        await this.guestbookService.getEntriesV1(this.urlQueryParamService.groupIdParam() ?? ''),
+      const entries = await this.guestbookService.getEntriesV1(
+        this.urlQueryParamService.groupIdParam() ?? '',
       );
+      await this.preloadFirstPhotos(entries);
+      this.photos.set(entries);
       this.currentPage.set(1);
     } catch {
       this.errorMessage.set('Nie udało się pobrać zdjęć. Spróbuj ponownie później.');
     } finally {
       this.isLoading.set(false);
     }
+  }
+
+  private async preloadFirstPhotos(entries: GuestbookEntryRecord[]): Promise<void> {
+    const photoUrls = entries
+      .map((entry) => entry.photoUrl)
+      .filter((photoUrl): photoUrl is string => Boolean(photoUrl))
+      .slice(0, 3);
+
+    await Promise.allSettled(
+      photoUrls.map((photoUrl) => {
+        const image = new Image();
+        image.loading = 'eager';
+        image.fetchPriority = 'high';
+        image.decoding = 'async';
+        image.src = photoUrl;
+        return image.decode();
+      }),
+    );
   }
 
   protected goToPreviousPage(): void {

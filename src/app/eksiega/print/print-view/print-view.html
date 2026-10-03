@@ -1,11 +1,23 @@
-<div class="no-print button-primary">
-  <button (click)="printPage()">Pobierz jako PDF / Drukuj</button>
-</div>
-
-<app-wishes-print
-  [wishes]="fetchedWishes()">
-</app-wishes-print>
-
-<app-photos-print
-  [photos]="fetchedPhotos()">
-</app-photos-print>
+<main class="pdf-page">
+  @if (isLoading()) {
+    <p class="status-message">Pobieranie wpisów...</p>
+  } @else {
+    @if (loadError()) {
+      <p class="status-message error-message" role="alert">{{ loadError() }}</p>
+    }
+    <button
+      class="download-button"
+      type="button"
+      [disabled]="isGeneratingPdf() || !!loadError()"
+      (click)="downloadPdf()"
+    >
+      {{ isGeneratingPdf() ? 'Tworzenie PDF...' : 'Pobierz księgę jako PDF' }}
+    </button>
+    @if (errorMessage()) {
+      <p class="status-message error-message" role="alert">{{ errorMessage() }}</p>
+    }
+    @if (photos().length === 0) {
+      <p class="status-message">Brak wpisów do wyświetlenia.</p>
+    }
+  }
+</main>
