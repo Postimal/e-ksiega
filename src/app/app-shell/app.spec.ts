@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
-import { UrlQueryParamService } from './services/url-query-params.service';
+import { UrlQueryParamService } from '../services/url-query-params.service';
 
 describe('App', () => {
   beforeEach(async () => {

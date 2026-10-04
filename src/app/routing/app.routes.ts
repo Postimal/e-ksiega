@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { GuestbookPage } from '../eksiega/guestbook-page';
-import { GalleryPage } from '../eksiega/galeria/gallery-page';
-import { PasswordPage } from '../haslo/password-page';
+import { GuestbookPage } from '../eksiega/guestbook-page/guestbook-page';
+import { GalleryPage } from '../eksiega/galeria/gallery-page/gallery-page';
+import { PasswordPage } from '../haslo/password-page/password-page';
 import { accessGuard } from './access.guard';
 import { PrintViewComponent } from '../eksiega/print/print-view/print-view';
 

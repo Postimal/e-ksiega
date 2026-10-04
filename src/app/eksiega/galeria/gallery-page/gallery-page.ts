@@ -1,9 +1,9 @@
 import { Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { GuestbookEntryRecord, GuestbookService } from '../../firebase/guestbook.service';
-import { WishesRenderer } from './wishes-renderer';
-import { UrlQueryParamService } from '../../services/url-query-params.service';
-import { PhotoSlideshow } from './photo-slideshow';
+import { GuestbookEntryRecord, GuestbookService } from '../../../firebase/guestbook.service';
+import { WishesRenderer } from '../wishes-renderer/wishes-renderer';
+import { UrlQueryParamService } from '../../../services/url-query-params.service';
+import { PhotoSlideshow } from '../photo-slideshow/photo-slideshow';
 
 @Component({
   standalone: true,

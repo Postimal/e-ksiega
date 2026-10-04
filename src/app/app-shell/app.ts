@@ -1,6 +1,6 @@
 import { Component, DOCUMENT, effect, inject, Renderer2 } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { UrlQueryParamService } from './services/url-query-params.service';
+import { UrlQueryParamService } from '../services/url-query-params.service';
 
 @Component({
   imports: [RouterOutlet],

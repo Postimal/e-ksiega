@@ -1,8 +1,8 @@
 import { Component, computed, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth';
-import { InteractionService } from '../services/interaction.service';
-import { QUERY_PARAM_REDIRECT, UrlQueryParamService } from '../services/url-query-params.service';
+import { AuthService } from '../../auth';
+import { InteractionService } from '../../services/interaction.service';
+import { QUERY_PARAM_REDIRECT, UrlQueryParamService } from '../../services/url-query-params.service';
 
 @Component({
   selector: 'app-password-page',

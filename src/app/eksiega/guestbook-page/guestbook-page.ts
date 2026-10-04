@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { GuestbookService } from '../firebase/guestbook.service';
-import { PhotoStorageService } from '../firebase/photo-storage.service';
-import { InteractionService } from '../services/interaction.service';
-import { UrlQueryParamService } from '../services/url-query-params.service';
+import { GuestbookService } from '../../firebase/guestbook.service';
+import { PhotoStorageService } from '../../firebase/photo-storage.service';
+import { InteractionService } from '../../services/interaction.service';
+import { UrlQueryParamService } from '../../services/url-query-params.service';
 
 export interface HeaderConfig {
   imgSrc: string;
