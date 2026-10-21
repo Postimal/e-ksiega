@@ -1,35 +1,36 @@
-<main class="page-shell">
-  <!-- <header class="page-header">
+<main class="page-shell" [class.baptism-theme]="currentConfig.decorativeHeader">
+  <header class="page-header">
+    @if (currentConfig.decorativeHeader) {
+      <img class="top-decoration top-decoration-left" src="assets/gora_lewy_maly.png" alt="" aria-hidden="true" />
+      <img class="top-decoration top-decoration-right" src="assets/gora_prawy_mały.png" alt="" aria-hidden="true" />
+    }
+
     <figure class="hero-image">
-      <img src="assets/teddy.png" alt="Miś z okazji uroczystości" />
+      <img [src]="currentConfig.imgSrc" [alt]="currentConfig.imgAlt" />
     </figure>
 
-    <div class="date-chip" aria-label="Data uroczystości">
-      <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg>
-      25 październik 2026
+    <div class="date-row">
+      @if (currentConfig.decorativeHeader) {
+        <img class="date-decoration" src="assets/obok_daty.png" alt="" aria-hidden="true" />
+      }
+      <div class="date-chip" aria-label="Data uroczystości">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <rect x="3" y="5" width="18" height="16" rx="3"></rect>
+          <path d="M8 3v4M16 3v4M3 10h18"></path>
+        </svg>
+        {{ currentConfig.date }}
+      </div>
+      @if (currentConfig.decorativeHeader) {
+        <img class="date-decoration" src="assets/obok_daty_2.png" alt="" aria-hidden="true" />
+      }
     </div>
-    <h1>Chrzest Święty<br />i Roczek</h1>
-    <p class="subtitle">Podziel się z nami życzeniami!</p>
-  </header> -->
 
-  <header class="page-header">
-  <figure class="hero-image">
-    <img [src]="currentConfig.imgSrc" [alt]="currentConfig.imgAlt" />
-  </figure>
-
-  <div class="date-chip" aria-label="Data uroczystości">
-    <svg aria-hidden="true" viewBox="0 0 24 24">
-      <rect x="3" y="5" width="18" height="16" rx="3"></rect>
-      <path d="M8 3v4M16 3v4M3 10h18"></path>
-    </svg>
-    {{ currentConfig.date }}
-  </div>
-
-  <h1 [innerHTML]="currentConfig.title"></h1>
-
-  <p class="subtitle">{{ currentConfig.subtitle }}</p>
-</header>
-
+    <h1 [innerHTML]="currentConfig.title"></h1>
+    @if (currentConfig.decorativeHeader) {
+      <img class="title-divider" src="assets/serce.png" alt="" aria-hidden="true" />
+    }
+    <p class="subtitle">{{ currentConfig.subtitle }}</p>
+  </header>
 
   <section class="guestbook-card" aria-labelledby="form-title">
     @if (submitted()) {

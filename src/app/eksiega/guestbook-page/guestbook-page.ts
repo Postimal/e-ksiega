@@ -11,9 +11,13 @@ export interface HeaderConfig {
   date: string;
   title: string;
   subtitle: string;
+  decorativeHeader?: boolean;
 }
 
 @Component({
+  host: {
+    '[class.baptism-theme]': 'currentConfig.decorativeHeader',
+  },
   imports: [RouterLink],
   selector: 'app-guestbook-page',
   styleUrl: './guestbook-page.scss',
@@ -33,11 +37,12 @@ export class GuestbookPage {
   private snackbarTimeout?: ReturnType<typeof setTimeout>;
   private readonly configs: Record<string, HeaderConfig> = {
     chrzest: {
-      imgSrc: 'assets/teddy.png',
+      imgSrc: 'assets/mis_sredni%20copy.png',
       imgAlt: 'Miś z okazji uroczystości',
       date: '25 październik 2026',
       title: 'Chrzest Święty<br />i Roczek',
       subtitle: 'Podziel się z nami życzeniami!',
+      decorativeHeader: true,
     },
     slub: {
       imgSrc: 'assets/hero-image.svg',
