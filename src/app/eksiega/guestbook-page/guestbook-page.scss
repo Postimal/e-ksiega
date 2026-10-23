@@ -11,7 +11,7 @@
   min-height: 100dvh;
   color: var(--text);
 }
-.page-shell { width: 100%; max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; }
+.page-shell { width: 100%; max-width: 680px; margin: 0 auto; padding: 4px 16px 48px; }
 .page-shell.baptism-theme {
   background: #f3f4ea;
 }
@@ -25,15 +25,15 @@
 .top-decoration { position: absolute; z-index: 2; top: 0; width: clamp(88px, 28vw, 150px); height: auto; pointer-events: none; }
 .top-decoration-left { left: -8px; }
 .top-decoration-right { right: -8px; }
-.hero-image { position: relative; z-index: 1; display: grid; place-items: center; height: 45vh; min-height: 280px; max-height: 520px; margin: 0 0 14px; overflow: hidden;}
-.baptism-theme .hero-image { height: clamp(230px, 78vw, 340px); min-height: 0; max-height: 340px; margin-bottom: 8px;}
+.hero-image { position: relative; z-index: 1; display: grid; place-items: center; min-height: 280px; margin: 24px 0 14px; overflow: hidden;}
+.baptism-theme .hero-image {min-height: 0; margin-bottom: 8px;}
 .hero-image img, .photo-preview { display: block; width: 100%; height: 100%; object-fit: cover; }
 .baptism-theme .hero-image img { object-fit: contain; }
-.date-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; }
-.date-decoration { width: clamp(36px, 13vw, 72px); height: auto; flex: 0 1 auto; }
-.date-chip { display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 8px 14px; border: 1px solid var(--color-1); border-radius: 999px; background: var(--white); color: var(--muted); box-shadow: 0 3px 8px var(--card-shadow), inset 0 1px 0 var(--white); font: 700 18px/1 "Alex Brush", cursive; white-space: nowrap; }
+.date-row { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 16px; }
+.date-decoration { position: relative; z-index: 0; width: clamp(36px, 13vw, 72px); height: auto; flex: 0 1 auto; margin-inline: -16px; }
+.date-chip { position: relative; z-index: 1; display: flex; gap: 8px; margin: 0; padding: 8px 14px; border: 1px solid var(--color-1); border-radius: 999px; background: var(--white); color: var(--muted); box-shadow: 0 3px 8px var(--card-shadow), inset 0 1px 0 var(--white); font: 700 22px/1 "Great Vibes", cursive; white-space: nowrap; letter-spacing: 1.4px; }
 .baptism-theme .date-chip { border-color: #c4c6b1; background: #fffdf8; }
-.date-chip svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
+.date-chip svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
 h1 { margin: 0; font: 400 clamp(48px, 14vw, 82px)/1 "Great Vibes", cursive; line-height: 1.25; }
 .baptism-theme h1 { font-size: clamp(40px, 11vw, 72px); }
 .title-divider { display: block; width: min(48%, 220px); height: auto; margin: 2px auto 0; }
